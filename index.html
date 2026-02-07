@@ -8,14 +8,14 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
-    /* BLOQUEO TOTAL DE SCROLL */
+    /* PERMITIR SCROLL NATURAL */
     html, body {
         margin: 0;
         padding: 0;
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden; 
-        position: fixed;
+        min-height: 100%;
+        width: 100%;
+        overflow-x: hidden; /* Evita scroll horizontal */
+        overflow-y: auto;   /* Permite scroll vertical */
     }
 
     body {
@@ -28,6 +28,7 @@
         align-items: center;
         text-align: center;
         color: #5a2a3c;
+        padding: 20px 0; /* Espacio para que no pegue arriba/abajo al scrollear */
     }
 
     @keyframes gradientBG {
@@ -57,11 +58,11 @@
         to { transform: translateY(110vh); }
     }
 
-    /* LA CARTA */
+    /* LA CARTA AJUSTADA PARA CELULAR */
     .container {
         position: relative;
         z-index: 10;
-        padding: 30px;
+        padding: 25px;
         width: 85%;
         max-width: 500px;
         background: rgba(255, 255, 255, 0.6);
@@ -70,11 +71,12 @@
         border-radius: 20px;
         border: 1px solid rgba(255, 255, 255, 0.3);
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        margin: 20px auto;
     }
 
     h1 {
         font-family: 'Pacifico', cursive;
-        font-size: 2.2em;
+        font-size: 2em;
         margin-bottom: 15px;
         color: #d6336c;
     }
@@ -83,7 +85,14 @@
         font-family: 'Pacifico', cursive;
         color: #d6336c;
         margin-top: 20px;
-        font-size: 1.6em;
+        font-size: 1.5em;
+    }
+
+    p {
+        font-size: 1.05em;
+        line-height: 1.5;
+        text-align: left; /* Mejor lectura para textos largos */
+        margin-bottom: 15px;
     }
 
     .btn-container {
@@ -91,17 +100,19 @@
         display: flex;
         justify-content: center;
         gap: 20px;
+        min-height: 50px;
     }
 
     .btn {
-        padding: 12px 30px;
-        font-size: 1.1em;
+        padding: 12px 25px;
+        font-size: 1em;
         border: none;
         border-radius: 50px;
         cursor: pointer;
         font-weight: bold;
         font-family: 'Nunito', sans-serif;
         transition: transform 0.2s;
+        touch-action: manipulation; /* Optimiza toques en móvil */
     }
 
     #btnSi {
@@ -110,15 +121,13 @@
         box-shadow: 0 5px 15px rgba(255, 42, 112, 0.4);
     }
 
-    /* EL BOTÓN NO: Ahora está fuera de todo, volando por la pantalla */
+    /* BOTÓN NO: Fixed para que siempre se vea donde sea que esté el scroll */
     #btnNo {
         background-color: #e0e0e0;
         color: #777;
-        position: fixed; /* Independiente de la carta */
-        z-index: 9999;   /* Siempre al frente de todo */
-        transition: none; /* Movimiento instantáneo */
-        left: 50%;       /* Posición inicial corregida */
-        margin-left: 40px; /* Separado del botón Sí al inicio */
+        position: fixed; 
+        z-index: 9999;
+        transition: none;
     }
 
     .floating-hearts {
@@ -143,42 +152,33 @@
         <h1>Para ti, mi amor</h1>
         <div class="content">
             <p>Hoy no quiero escribirte desde la prisa ni desde el miedo, quiero hacerlo desde la verdad de mi corazón. Desde ese amor que ha crecido contigo a lo largo de los años, incluso en los momentos más difíciles.</p>
-
-	<p>Hemos pasado por cosas que nos marcaron, que dolieron y que nos hicieron replantearnos todo. No ha sido fácil, pero aquí seguimos, aprendiendo, sanando y eligiéndonos con más conciencia que antes.</p>
-
-	<p>Quiero que sepas que te amo profundamente. Te amo en tus luces y en tus sombras, en tus aciertos y en tus errores. Y sí, tengo miedo… miedo de perderte, miedo de que el pasado vuelva a doler, pero aun así decido quedarme, 	confiar y construir algo mejor contigo.</p>
-
-	<p>Hoy quiero hacer las cosas bien. Quiero escucharte de verdad, verte, comprenderte y caminar a tu lado sin reproches, pero con honestidad y amor. No porque sea fácil, sino porque eres tú.</p>
-
-	<p>Gracias por estar aquí, por no huir, por intentar sanar y por permitirme sanar también. Mi amor por ti no es perfecto, pero es sincero, leal y profundo.</p>
-
-	<h2>¿Quieres ser mi San Valentín? 💕</h2>
-
+            <p>Hemos pasado por cosas que nos marcaron, que dolieron y que nos hicieron replantearnos todo. No ha sido fácil, pero aquí seguimos, aprendiendo, sanando y eligiéndonos con más conciencia que antes.</p>
+            <p>Quiero que sepas que te amo profundamente. Te amo en tus luces y en tus sombras, en tus aciertos y en tus errores. Y sí, tengo miedo… miedo de perderte, miedo de que el pasado vuelva a doler, pero aun así decido quedarme, confiar y construir algo mejor contigo.</p>
+            <p>Hoy quiero hacer las cosas bien. Quiero escucharte de verdad, verte, comprenderte y caminar a tu lado sin reproches, pero con honestidad y amor. No porque sea fácil, sino porque eres tú.</p>
+            <p>Gracias por estar aquí, por no huir, por intentar sanar y por permitirme sanar también. Mi amor por ti no es perfecto, pero es sincero, leal y profundo.</p>
+            <h2>¿Quieres ser mi San Valentín? 💕</h2>
             
             <div class="btn-container">
                 <button id="btnSi" class="btn" onclick="aceptar()">¡Sí, claro que sí!</button>
-                </div>
+                <button id="btnNo" class="btn" onmouseover="moverBoton()" ontouchstart="moverBoton()">No</button>
+            </div>
         </div>
         <div style="margin-top: 25px; font-weight: bold; color: #d6336c;"> 💕Te quiere, tu gran amor -Yahir💕 </div>
     </div>
-
-    <button id="btnNo" class="btn" onmouseover="moverBoton()" ontouchstart="moverBoton()">No</button>
 
 <script>
     function moverBoton() {
         const btnNo = document.getElementById('btnNo');
         
-        // Calculamos espacio disponible restando márgenes de seguridad
-        const padding = 50;
+        // El botón usa position: fixed, por lo que se mueve relativo a la VENTANA (viewport),
+        // no importa cuánto scroll haya hecho el usuario.
+        const padding = 60;
         const maxX = window.innerWidth - btnNo.offsetWidth - padding;
         const maxY = window.innerHeight - btnNo.offsetHeight - padding;
 
-        // Generamos posición aleatoria
         const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
         const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
 
-        // Aplicamos la posición instantáneamente
-        btnNo.style.margin = "0"; // Quitamos el margen inicial
         btnNo.style.left = randomX + "px";
         btnNo.style.top = randomY + "px";
     }
@@ -191,8 +191,7 @@
         });
 
         setTimeout(() => {
-            alert("¡Sabía que dirías que sí! Te amo con todo mi corazon, gracias por elegirme. 💖. Por favor da clic en Aceptar, te llevara a una sorpresa");
-            // REDIRECCIÓN A TU CANCIÓN
+            alert("¡Sabía que dirías que sí! Te amo con todo mi corazón, gracias por elegirme. 💖. Por favor da clic en Aceptar, te llevara a una sorpresa");
             window.location.href = "https://www.youtube.com/watch?v=_JBOHau6ufk"; 
         }, 800);
     }
@@ -212,14 +211,19 @@
     }
     createHearts();
 
-    // Colocar el botón No inicialmente cerca del botón Sí pero con Fixed
-    window.onload = () => {
+    // Posicionamiento inicial relativo a la carta
+    function posicionInicial() {
         const btnSi = document.getElementById('btnSi');
         const btnNo = document.getElementById('btnNo');
         const rect = btnSi.getBoundingClientRect();
+        
+        // Lo ponemos al lado del botón Sí
         btnNo.style.top = rect.top + "px";
         btnNo.style.left = (rect.right + 20) + "px";
-    };
+    }
+
+    window.onload = posicionInicial;
+    window.onresize = posicionInicial;
 </script>
 
 </body>
