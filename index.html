@@ -1,230 +1,185 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Para ti, mi amor 💖</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti, mi amor 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-<style>
-    /* PERMITIR SCROLL NATURAL */
-    html, body {
-        margin: 0;
-        padding: 0;
-        min-height: 100%;
-        width: 100%;
-        overflow-x: hidden; /* Evita scroll horizontal */
-        overflow-y: auto;   /* Permite scroll vertical */
-    }
+    <style>
+        /* RESET TOTAL: Permitir scroll */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden; /* Evita que se mueva de lado */
+            overflow-y: auto !important; /* FUERZA EL SCROLL VERTICAL */
+            -webkit-overflow-scrolling: touch; /* Suavidad en iPhone */
+        }
 
-    body {
-        font-family: 'Nunito', sans-serif;
-        background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ffd1ff, #fbc2eb);
-        background-size: 400% 400%;
-        animation: gradientBG 15s ease infinite;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        color: #5a2a3c;
-        padding: 20px 0; /* Espacio para que no pegue arriba/abajo al scrollear */
-    }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ffd1ff, #fbc2eb);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: block; /* Cambiado de flex para no bloquear el flujo */
+            text-align: center;
+            color: #5a2a3c;
+        }
 
-    @keyframes gradientBG {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-    .heart-rain {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        pointer-events: none;
-    }
+        .heart-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
 
-    .heart-drop {
-        position: absolute;
-        top: -10vh;
-        font-size: 1.5rem;
-        animation: fall linear infinite;
-    }
+        .heart-drop {
+            position: absolute;
+            top: -10vh;
+            font-size: 1.5rem;
+            animation: fall linear infinite;
+        }
 
-    @keyframes fall {
-        to { transform: translateY(110vh); }
-    }
+        @keyframes fall {
+            to { transform: translateY(110vh); }
+        }
 
-    /* LA CARTA AJUSTADA PARA CELULAR */
-    .container {
-        position: relative;
-        z-index: 10;
-        padding: 25px;
-        width: 85%;
-        max-width: 500px;
-        background: rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-        margin: 20px auto;
-    }
+        .container {
+            position: relative;
+            z-index: 10;
+            padding: 25px;
+            width: 85%;
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin: 40px auto; /* Centrado con margen arriba y abajo */
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
 
-    h1 {
-        font-family: 'Pacifico', cursive;
-        font-size: 2em;
-        margin-bottom: 15px;
-        color: #d6336c;
-    }
+        h1, h2 { font-family: 'Pacifico', cursive; color: #d6336c; }
+        
+        p { 
+            font-size: 1.1em; 
+            line-height: 1.6; 
+            text-align: left; 
+            margin-bottom: 15px;
+        }
 
-    h2 {
-        font-family: 'Pacifico', cursive;
-        color: #d6336c;
-        margin-top: 20px;
-        font-size: 1.5em;
-    }
+        .btn-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            min-height: 60px;
+        }
 
-    p {
-        font-size: 1.05em;
-        line-height: 1.5;
-        text-align: left; /* Mejor lectura para textos largos */
-        margin-bottom: 15px;
-    }
+        .btn {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-    .btn-container {
-        margin-top: 25px;
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        min-height: 50px;
-    }
+        #btnSi {
+            background: #ff4d88;
+            color: white;
+            z-index: 20;
+        }
 
-    .btn {
-        padding: 12px 25px;
-        font-size: 1em;
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        font-weight: bold;
-        font-family: 'Nunito', sans-serif;
-        transition: transform 0.2s;
-        touch-action: manipulation; /* Optimiza toques en móvil */
-    }
+        /* El botón NO ahora es FIXED para que no rompa el scroll */
+        #btnNo {
+            background-color: #e0e0e0;
+            color: #777;
+            position: absolute; /* Inicialmente relativo a la carta */
+            transition: none;
+        }
 
-    #btnSi {
-        background: linear-gradient(45deg, #ff4d88, #ff2a70);
-        color: white;
-        box-shadow: 0 5px 15px rgba(255, 42, 112, 0.4);
-    }
-
-    /* BOTÓN NO: Fixed para que siempre se vea donde sea que esté el scroll */
-    #btnNo {
-        background-color: #e0e0e0;
-        color: #777;
-        position: fixed; 
-        z-index: 9999;
-        transition: none;
-    }
-
-    .floating-hearts {
-        font-size: 2em;
-        margin-bottom: 10px;
-        animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-    }
-</style>
+        .footer-text {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #d6336c;
+            padding-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
-
     <div class="heart-rain" id="heartRain"></div>
 
     <div class="container">
-        <div class="floating-hearts">💖💗💞💘</div>
+        <div style="font-size: 2em;">💖💗💞</div>
         <h1>Para ti, mi amor</h1>
-        <div class="content">
-            <p>Hoy no quiero escribirte desde la prisa ni desde el miedo, quiero hacerlo desde la verdad de mi corazón. Desde ese amor que ha crecido contigo a lo largo de los años, incluso en los momentos más difíciles.</p>
-            <p>Hemos pasado por cosas que nos marcaron, que dolieron y que nos hicieron replantearnos todo. No ha sido fácil, pero aquí seguimos, aprendiendo, sanando y eligiéndonos con más conciencia que antes.</p>
-            <p>Quiero que sepas que te amo profundamente. Te amo en tus luces y en tus sombras, en tus aciertos y en tus errores. Y sí, tengo miedo… miedo de perderte, miedo de que el pasado vuelva a doler, pero aun así decido quedarme, confiar y construir algo mejor contigo.</p>
-            <p>Hoy quiero hacer las cosas bien. Quiero escucharte de verdad, verte, comprenderte y caminar a tu lado sin reproches, pero con honestidad y amor. No porque sea fácil, sino porque eres tú.</p>
-            <p>Gracias por estar aquí, por no huir, por intentar sanar y por permitirme sanar también. Mi amor por ti no es perfecto, pero es sincero, leal y profundo.</p>
-            <h2>¿Quieres ser mi San Valentín? 💕</h2>
-            
-            <div class="btn-container">
-                <button id="btnSi" class="btn" onclick="aceptar()">¡Sí, claro que sí!</button>
-                <button id="btnNo" class="btn" onmouseover="moverBoton()" ontouchstart="moverBoton()">No</button>
-            </div>
+        
+        <p>Hoy no quiero escribirte desde la prisa ni desde el miedo, quiero hacerlo desde la verdad de mi corazón. Desde ese amor que ha crecido contigo a lo largo de los años.</p>
+        <p>Hemos pasado por cosas que nos marcaron, que dolieron y que nos hicieron replantearnos todo. No ha sido fácil, pero aquí seguimos, aprendiendo y sanando.</p>
+        <p>Te amo profundamente. Te amo en tus luces y en tus sombras. Y sí, tengo miedo… pero aun así decido quedarme, confiar y construir algo mejor contigo.</p>
+        <p>Gracias por estar aquí, por no huir y por permitirme sanar a tu lado. Mi amor por ti es sincero, leal y profundo.</p>
+
+        <h2>¿Quieres ser mi San Valentín? 💕</h2>
+        
+        <div class="btn-container">
+            <button id="btnSi" class="btn" onclick="aceptar()">¡Sí, claro!</button>
+            <button id="btnNo" class="btn" onmouseover="moverBoton()" ontouchstart="moverBoton()">No</button>
         </div>
-        <div style="margin-top: 25px; font-weight: bold; color: #d6336c;"> 💕Te quiere, tu gran amor -Yahir💕 </div>
+
+        <div class="footer-text">💕 Te quiere, Yahir 💕</div>
     </div>
 
 <script>
     function moverBoton() {
         const btnNo = document.getElementById('btnNo');
         
-        // El botón usa position: fixed, por lo que se mueve relativo a la VENTANA (viewport),
-        // no importa cuánto scroll haya hecho el usuario.
-        const padding = 60;
+        // Al tocarlo, se vuelve FIXED para que vuele por TODA la pantalla visible
+        btnNo.style.position = 'fixed';
+        
+        const padding = 50;
         const maxX = window.innerWidth - btnNo.offsetWidth - padding;
         const maxY = window.innerHeight - btnNo.offsetHeight - padding;
 
-        const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
-        const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+        const randomX = Math.floor(Math.random() * maxX) + (padding/2);
+        const randomY = Math.floor(Math.random() * maxY) + (padding/2);
 
-        btnNo.style.left = randomX + "px";
-        btnNo.style.top = randomY + "px";
+        btnNo.style.left = randomX + 'px';
+        btnNo.style.top = randomY + 'px';
     }
 
     function aceptar() {
-        confetti({
-            particleCount: 150,
-            spread: 70,
-            origin: { y: 0.6 }
-        });
-
+        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         setTimeout(() => {
-            alert("¡Sabía que dirías que sí! Te amo con todo mi corazón, gracias por elegirme. 💖. Por favor da clic en Aceptar, te llevara a una sorpresa");
+            alert("¡Sabía que dirías que sí! Te amo con todo mi corazón. 💖");
             window.location.href = "https://www.youtube.com/watch?v=_JBOHau6ufk"; 
-        }, 800);
+        }, 600);
     }
 
     function createHearts() {
         const heartRain = document.getElementById('heartRain');
-        const emojis = ['💖', '💗', '💞', '🌹'];
-        for (let i = 0; i < 15; i++) {
+        const emojis = ['💖', '💗', '🌹'];
+        for (let i = 0; i < 12; i++) {
             const heart = document.createElement('div');
             heart.className = 'heart-drop';
             heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 2 + 3 + 's'; 
-            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's'; 
             heartRain.appendChild(heart);
         }
     }
     createHearts();
-
-    // Posicionamiento inicial relativo a la carta
-    function posicionInicial() {
-        const btnSi = document.getElementById('btnSi');
-        const btnNo = document.getElementById('btnNo');
-        const rect = btnSi.getBoundingClientRect();
-        
-        // Lo ponemos al lado del botón Sí
-        btnNo.style.top = rect.top + "px";
-        btnNo.style.left = (rect.right + 20) + "px";
-    }
-
-    window.onload = posicionInicial;
-    window.onresize = posicionInicial;
 </script>
-
 </body>
 </html>
